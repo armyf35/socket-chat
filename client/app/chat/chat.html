@@ -3,15 +3,17 @@
   <p>user: {{ name }}</p>
   <p>users: {{ users.length }}</p>
   <p ng-repeat="user in users track by $index">{{ user }}</p>
-  <form ng-submit="sendMessage()" novalidate>
+  <form name="sendmessage" ng-submit="sendMessage()" novalidate>
     <input
       type="text"
       placeholder="Message"
+      required
       ng-model="message">
     </input>
     <button
       type="submit"
-      name="button">
+      name="button"
+      ng-disabled="sendmessage.$invalid">
     Send
     </button>
   </form>
