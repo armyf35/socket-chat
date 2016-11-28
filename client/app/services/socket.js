@@ -1,4 +1,4 @@
-angular.module('socket-chat.sockerService', [])
+angular.module('socket-chat.socketService', [])
 .factory('Socket', function() {
   var connected = false;
 

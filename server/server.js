@@ -9,6 +9,9 @@ require('./config/routes.js')(app, express);
 
 io.on('connection', function(socket) {
   console.log('a user connected');
+  socket.on('connected', function(name) {
+    console.log('name: ', name);
+  });
 });
 
 http.listen(process.env.PORT, function() {
