@@ -1,9 +1,6 @@
 <div class="container-fluid" id='chat' ng-init="loadCurrent(); promptName()">
   <div class="row">
-    <div class="col-md-2">
-      user: {{ name }}
-    </div>
-    <form class="form-group col-md-8" name="sendmessage" ng-submit="sendMessage()" novalidate>
+    <form class="form-group col-md-8 col-md-offset-2" name="sendmessage" ng-submit="sendMessage()" novalidate>
       <div class="input-group">
         <input
           type="text"
