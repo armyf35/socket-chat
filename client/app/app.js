@@ -5,7 +5,7 @@ angular.module('socket-chat', [
 .config(function ($routeProvider) {
   $routeProvider
     .when('/home', {
-      templateUrl: 'app/chat/home.html',
+      templateUrl: 'app/chat/chat.html',
       controller: 'ChatController'
     })
     .otherwise({
