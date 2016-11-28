@@ -1,4 +1,4 @@
-module.exports = function (app, express, activeUsers, messages) {
+module.exports = function (app, express, activeUsers, guestList, messages) {
   app.get('/api/users/active', function(req, res) {
     res.json(activeUsers);
   });
@@ -8,6 +8,15 @@ module.exports = function (app, express, activeUsers, messages) {
     tempMessages.reverse();
 
     res.json(tempMessages);
+  });
+
+  app.get('/api/users/guest', function(req, res) {
+    let num = 1;
+    while (guestList.indexOf(num) !== -1) {
+      num++;
+    }
+
+    res.json(num);
   });
 
   app.get('*', function(req, res) {
