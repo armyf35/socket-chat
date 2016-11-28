@@ -13,4 +13,8 @@ angular.module('socket-chat.chat', [
   Socket.on('login', function(name) {
     $scope.users.push(name);
   });
+
+  Socket.on('logout', function(name) {
+    $scope.users.splice($scope.users.indexOf(name), 1);
+  });
 });
