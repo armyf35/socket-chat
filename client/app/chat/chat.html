@@ -3,17 +3,18 @@
   <p>user: {{ name }}</p>
   <p>users: {{ users.length }}</p>
   <p ng-repeat="user in users track by $index">{{ user }}</p>
-  <input
-    type="text"
-    placeholder="Message"
-    ng-model="message">
-  </input>
-  <button
-    type="button"
-    name="button"
-    ng-click="sendMessage()">
-  Send
-  </button>
+  <form ng-submit="sendMessage()" novalidate>
+    <input
+      type="text"
+      placeholder="Message"
+      ng-model="message">
+    </input>
+    <button
+      type="submit"
+      name="button">
+    Send
+    </button>
+  </form>
   <p>messages: {{ messages.length }}</p>
   <p ng-repeat="message in messages track by $index ">{{ message }}</p>
 </div>
