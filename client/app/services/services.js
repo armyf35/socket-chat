@@ -26,13 +26,6 @@ angular.module('socket-chat.services', [])
   };
 })
 .factory('Message', function($http) {
-  var getActiveUsers = function() {
-    return $http.get('/api/users/active')
-      .then(function(res) {
-        return res.data;
-      });
-  };
-
   var getRecent = function() {
     return $http.get('/api/messages/recent')
       .then(function(res) {
@@ -41,7 +34,26 @@ angular.module('socket-chat.services', [])
   };
 
   return {
-    getActiveUsers: getActiveUsers,
     getRecent: getRecent
+  };
+})
+.factory('Users', function($http) {
+  var getActiveUsers = function() {
+    return $http.get('/api/users/active')
+      .then(function(res) {
+        return res.data;
+      });
+  };
+
+  var getGuestNum = function() {
+    return $http.get('/api/users/guest')
+      .then(function(res) {
+        return res.data;
+      });
+  };
+
+  return {
+    getActiveUsers: getActiveUsers,
+    getGuestNum: getGuestNum
   };
 });
