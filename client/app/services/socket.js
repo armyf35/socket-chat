@@ -1,4 +1,4 @@
-angular.module('socket-chat.socketService', [])
+angular.module('socket-chat.services', [])
 .factory('Socket', function($rootScope) {
   var connection = io.connect();
 
@@ -23,5 +23,18 @@ angular.module('socket-chat.socketService', [])
     on: on,
     login: login,
     sendMessage: sendMessage
+  };
+})
+.factory('Message', function($http) {
+  var getActiveUsers = function() {
+
+  };
+  var getRecent = function() {
+
+  };
+
+  return {
+    getActiveUsers: getActiveUsers,
+    getRecent: getRecent
   };
 });

@@ -1,9 +1,9 @@
 angular.module('socket-chat.chat', [
-  'socket-chat.socketService'
+  'socket-chat.services'
 ])
 
-.controller('ChatController', function ($scope, Socket) {
-  $scope.users = [];
+.controller('ChatController', function ($scope, Socket, Message) {
+  $scope.users = Message.getActiveUsers();
   $scope.message = '';
   $scope.messages = Message.getRecent();
   $scope.messageDisplayAmount = 20;
