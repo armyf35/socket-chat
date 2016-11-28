@@ -4,16 +4,25 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var activeUsers = [];
+var guestList = [];
 var messages = [];
 
 require('./config/middleware.js')(app, express);
-require('./config/routes.js')(app, express, activeUsers, messages);
+require('./config/routes.js')(app, express, activeUsers, guestList, messages);
 
 io.on('connection', function(socket) {
   socket.on('login', function(name) {
     socket.name = name;
     socket.broadcast.emit('login', name);
     activeUsers.push(name);
+    if (name.substr(0, 5) === 'guest') {
+      guestList.push(parseInt(name.substr(5)));
+    }
+  });
+
+  socket.on('logout', function(name) {
+    socket.broadcast.emit('logout', name);
+    activeUsers.splice(activeUsers.indexOf(name), 1);
   });
 
   socket.on('disconnect', function() {
