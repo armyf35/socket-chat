@@ -16,5 +16,7 @@
     </button>
   </form>
   <p>messages: {{ messages.length }}</p>
-  <p ng-repeat="message in messages track by $index ">{{ message }}</p>
+  <p ng-repeat="message in messages track by $index ">
+    {{ message.user }} @ {{ message.createdAt}}: {{ message.text }}
+  </p>
 </div>

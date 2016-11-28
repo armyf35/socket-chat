@@ -5,7 +5,7 @@ angular.module('socket-chat.chat', [
 .controller('ChatController', function ($scope, Socket) {
   $scope.users = [];
   $scope.message = '';
-  $scope.messages = [];
+  $scope.messages = Message.getRecent();
   $scope.messageDisplayAmount = 20;
 
   $scope.promptName = function() {
@@ -14,8 +14,14 @@ angular.module('socket-chat.chat', [
   };
 
   $scope.sendMessage = function() {
-    Socket.sendMessage($scope.message);
-    $scope.addMessage($scope.message);
+    let message = {
+      user: $scope.name,
+      text: $scope.message,
+      createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
+    };
+
+    Socket.sendMessage(message);
+    $scope.addMessage(message);
     $scope.message = '';
   };
 
