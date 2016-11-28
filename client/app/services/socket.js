@@ -1,20 +1,22 @@
 angular.module('socket-chat.socketService', [])
-.factory('Socket', function() {
-  var connected = false;
+.factory('Socket', function($rootScope) {
+  var connection = io.connect();
 
-  var connect = function() {
-    connected = io.connect();
+  var on = function (eventName, callback) {
+    connection.on(eventName, function () {
+      var args = arguments;
+      $rootScope.$apply(function () {
+        callback.apply(connection, args);
+      });
+    });
   };
 
   var login = function(name) {
-    if (!connected) {
-      connect();
-    }
-    connected.emit('connected', name);
+    connection.emit('login', name);
   };
 
   return {
-    connect: connect,
+    on: on,
     login: login
   };
 });
