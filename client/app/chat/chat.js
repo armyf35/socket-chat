@@ -15,6 +15,16 @@ angular.module('socket-chat.chat', [
 
   $scope.sendMessage = function() {
     Socket.sendMessage($scope.message);
+    $scope.addMessage($scope.message);
+    $scope.message = '';
+  };
+
+  $scope.addMessage = function(msg) {
+    $scope.messages.unshift(msg);
+
+    if ($scope.messages.length > $scope.messageDisplayAmount) {
+      $scope.messages.pop();
+    }
   };
 
   Socket.on('login', function(name) {
@@ -26,10 +36,6 @@ angular.module('socket-chat.chat', [
   });
 
   Socket.on('message', function(msg) {
-    $scope.messages.unshift(msg);
-
-    if ($scope.messages.length > $scope.messageDisplayAmount) {
-      $scope.messages.pop();
-    }
+    $scope.addMessage(msg);
   });
 });
