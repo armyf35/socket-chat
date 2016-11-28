@@ -9,8 +9,9 @@ require('./config/routes.js')(app, express);
 
 io.on('connection', function(socket) {
   console.log('a user connected');
-  socket.on('connected', function(name) {
-    console.log('name: ', name);
+  socket.on('login', function(name) {
+    console.log(`user login: ${name}`);
+    socket.broadcast.emit('login', name);
   });
 });
 
