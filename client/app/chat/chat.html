@@ -1,13 +1,33 @@
 <div class="container-fluid" id='chat' ng-init="loadCurrent(); promptName()">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-2">
       user: {{ name }}
     </div>
+    <form class="form-group col-md-8" name="sendmessage" ng-submit="sendMessage()" novalidate>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          required
+          ng-model="message">
+        <span class="input-group-btn">
+          <button
+            class="btn btn-default"
+            type="submit"
+            name="button"
+            ng-disabled="sendmessage.$invalid">
+            Send
+          </button>
+        </span>
+      </div>
+    </form>
     <div class="col-md-2">
-    <!-- TODO: Show current Users -->
       <div class="list-group">
         <a class="list-group-item active">
-          Users: {{ users.length }}
+          Username: <span class="pull-right">{{ name }}</span>
+        </a>
+        <a class="list-group-item">
+          Users logged in: <span class="badge">{{ users.length }}</span>
         </a>
         <a class="list-group-item" ng-repeat="user in users track by $index">
           {{ user }}
@@ -15,22 +35,14 @@
       </div>
     </div>
   </div>
-  <form name="sendmessage" ng-submit="sendMessage()" novalidate>
-    <input
-      type="text"
-      placeholder="Message"
-      required
-      ng-model="message">
-    </input>
-    <button
-      type="submit"
-      name="button"
-      ng-disabled="sendmessage.$invalid">
-    Send
-    </button>
-  </form>
-  <p>messages: {{ messages.length }}</p>
-  <p ng-repeat="message in messages track by $index ">
-    {{ message.user }} @ <span am-time-ago="message.createdAt | amParse:'YYYY-MM-DD H:mm:ss'"></span>: {{ message.text }}
-  </p>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="message in messages track by $index">
+          <h4 class="list-group-item-heading">{{ message.user }}<span class="pull-right" am-time-ago="message.createdAt | amParse:'YYYY-MM-DD H:mm:ss'"></span></h4>
+          <p class="list-group-item-text">{{ message.text }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
