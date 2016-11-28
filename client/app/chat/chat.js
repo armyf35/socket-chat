@@ -1,8 +1,9 @@
 angular.module('socket-chat.chat', [
-  'socket-chat.services'
+  'socket-chat.services',
+  'angularMoment'
 ])
 
-.controller('ChatController', function ($scope, Socket, Message) {
+.controller('ChatController', function ($scope, Socket, Message, moment) {
   $scope.users = [];
   $scope.message = '';
   $scope.messages = [];
@@ -29,7 +30,7 @@ angular.module('socket-chat.chat', [
     let message = {
       user: $scope.name,
       text: $scope.message,
-      createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      createdAt: moment().format('YYYY-MM-DD H:mm:ss')
     };
 
     Socket.sendMessage(message);

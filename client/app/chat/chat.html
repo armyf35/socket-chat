@@ -19,6 +19,6 @@
   </form>
   <p>messages: {{ messages.length }}</p>
   <p ng-repeat="message in messages track by $index ">
-    {{ message.user }} @ {{ message.createdAt}}: {{ message.text }}
+    {{ message.user }} @ <span am-time-ago="message.createdAt | amParse:'YYYY-MM-DD H:mm:ss'"></span>: {{ message.text }}
   </p>
 </div>
