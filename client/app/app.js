@@ -4,11 +4,11 @@ angular.module('socket-chat', [
 ])
 .config(function ($routeProvider) {
   $routeProvider
-    .when('/home', {
+    .when('/chat', {
       templateUrl: 'app/chat/chat.html',
       controller: 'ChatController'
     })
     .otherwise({
-      redirectTo: '/home'
+      redirectTo: '/chat'
     });
 });
