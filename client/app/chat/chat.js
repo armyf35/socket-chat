@@ -28,7 +28,7 @@ angular.module('socket-chat.chat', [
   Socket.on('message', function(msg) {
     $scope.messages.unshift(msg);
 
-    if ($scope.messages.length === $scope.messageDisplayAmount) {
+    if ($scope.messages.length > $scope.messageDisplayAmount) {
       $scope.messages.pop();
     }
   });
