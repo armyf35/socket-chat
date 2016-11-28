@@ -27,10 +27,17 @@ angular.module('socket-chat.services', [])
 })
 .factory('Message', function($http) {
   var getActiveUsers = function() {
-
+    return $http.get('/api/users/active')
+      .then(function(res) {
+        return res.data;
+      });
   };
-  var getRecent = function() {
 
+  var getRecent = function() {
+    return $http.get('/api/messages/recent')
+      .then(function(res) {
+        return res.data;
+      });
   };
 
   return {
