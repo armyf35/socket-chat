@@ -4,12 +4,17 @@ angular.module('socket-chat.chat', [
 
 .controller('ChatController', function ($scope, Socket) {
   $scope.users = [];
+  $scope.message = '';
   $scope.messages = [];
   $scope.messageDisplayAmount = 20;
 
   $scope.promptName = function() {
     $scope.name = prompt('What is your name?') || 'anonymous';
     Socket.login($scope.name);
+  };
+
+  $scope.sendMessage = function() {
+    Socket.sendMessage($scope.message);
   };
 
   Socket.on('login', function(name) {
