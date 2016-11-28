@@ -1,5 +1,4 @@
 <div id='chat' ng-init="loadCurrent(); promptName()">
-  <h1>Chat<h1>
   <p>user: {{ name }}</p>
   <p>users: {{ users.length }}</p>
   <p ng-repeat="user in users track by $index">{{ user }}</p>
