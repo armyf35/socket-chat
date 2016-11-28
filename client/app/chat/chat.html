@@ -1,7 +1,20 @@
-<div id='chat' ng-init="loadCurrent(); promptName()">
-  <p>user: {{ name }}</p>
-  <p>users: {{ users.length }}</p>
-  <p ng-repeat="user in users track by $index">{{ user }}</p>
+<div class="container-fluid" id='chat' ng-init="loadCurrent(); promptName()">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      user: {{ name }}
+    </div>
+    <div class="col-md-2">
+    <!-- TODO: Show current Users -->
+      <div class="list-group">
+        <a class="list-group-item active">
+          Users: {{ users.length }}
+        </a>
+        <a class="list-group-item" ng-repeat="user in users track by $index">
+          {{ user }}
+        </a>
+      </div>
+    </div>
+  </div>
   <form name="sendmessage" ng-submit="sendMessage()" novalidate>
     <input
       type="text"
