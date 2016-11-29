@@ -25,6 +25,7 @@ db.knex.schema.hasTable('messages').then(function(exists) {
       messages.increments('id').primary();
       messages.text('text');
       messages.integer('user_id');
+      messages.integer('channel_id');
       messages.timestamps(true, true);
     }).then(function (table) {
       console.log('Created Table', table);
