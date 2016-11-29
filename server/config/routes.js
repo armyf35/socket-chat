@@ -1,7 +1,8 @@
 const User = require('../models/user');
 const Message = require('../models/message');
-const Users = require('../models/user');
-const Messages = require('../models/message');
+const Users = require('../collections/users');
+const Messages = require('../collections/messages');
+var jwt = require('jwt-simple');
 
 module.exports = function (app, express, activeUsers, guestList, messages) {
   app.get('/api/users/active', function(req, res) {
@@ -23,15 +24,15 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
 
     new User({ username: username }).fetch().then(function(found) {
       if (found) {
-        res.sendStatus(409);
+        res.status(409).json({error: 'user already exists'});
       } else {
         Users.create({
           username: username,
           password: password
         })
         .then(function(newUser) {
-          // TODO: Session
-          res.json(newUser);
+          var token = jwt.encode(newUser, 'secret');
+          res.json({token: token});
         });
       }
     });
@@ -41,12 +42,19 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
     var username = req.body.username;
     var password = req.body.password;
 
-    new User({username: username, password: password}).fetch().then(function(found) {
+    new User({username: username}).fetch().then(function(found) {
       if (found) {
-        // TODO: Session
-        res.json(found);
+        found.comparePassword(password)
+          .then((match) => {
+            if (match) {
+              var token = jwt.encode(found, 'secret');
+              res.json({token: token});
+            } else {
+              res.status(404).json({error: 'invalid password'});
+            }
+          });
       } else {
-        res.json(found);
+        res.status(404).json({error: 'invalid username'});
       }
     });
   });
@@ -59,6 +67,6 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
   });
 
   app.get('*', function(req, res) {
-    res.send('<h1>Hello world</h1>');
+    res.status(404).send('Think your in the wrong place bud');
   });
 };
