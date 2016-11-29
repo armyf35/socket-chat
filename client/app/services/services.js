@@ -22,11 +22,6 @@ angular.module('socket-chat.services', [])
     connection.emit('logout', name);
   };
 
-
-  var active = function() {
-    connection.emit('active');
-  };
-
   return {
     on: on,
     login: login,
