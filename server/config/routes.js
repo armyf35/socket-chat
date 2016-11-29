@@ -4,18 +4,9 @@ const Users = require('../collections/users');
 const Messages = require('../collections/messages');
 var jwt = require('jwt-simple');
 
-module.exports = function (app, express, activeUsers, guestList, messages) {
+module.exports = function (app, express, activeUsers) {
   app.get('/api/users/active', function(req, res) {
     res.json(activeUsers);
-  });
-
-  app.get('/api/users/guest', function(req, res) {
-    let num = 1;
-    while (guestList.indexOf(num) !== -1) {
-      num++;
-    }
-
-    res.json(num);
   });
 
   app.post('/api/users/signup', function(req, res) {
@@ -60,10 +51,10 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
   });
 
   app.get('/api/messages/recent', function(req, res) {
-    let tempMessages = messages.slice(-20);
-    tempMessages.reverse();
+    // let tempMessages = messages.slice(-20);
+    // tempMessages.reverse();
 
-    res.json(tempMessages);
+    res.json(Messages);
   });
 
   app.get('*', function(req, res) {
