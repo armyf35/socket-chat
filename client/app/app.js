@@ -10,12 +10,12 @@ angular.module('socket-chat', [
       controller: 'ChatController'
     })
     .when('/register', {
-      templateUrl: 'app/chat/chat.html',
-      controller: 'ChatController'
+      templateUrl: 'app/auth/auth.html',
+      controller: 'AuthController'
     })
     .when('/login', {
-      templateUrl: 'app/chat/chat.html',
-      controller: 'ChatController'
+      templateUrl: 'app/auth/auth.html',
+      controller: 'AuthController'
     })
     .otherwise({
       redirectTo: '/chat'
