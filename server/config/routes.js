@@ -51,10 +51,29 @@ module.exports = function (app, express, io, activeUsers) {
   });
 
   app.get('/api/messages/recent', function(req, res) {
-    // let tempMessages = messages.slice(-20);
-    // tempMessages.reverse();
+    Messages.orderBy('created_at')
+      .fetch()
+      .then((rows) => {
+        res.json(rows);
+      });
+  });
 
-    res.json(Messages);
+  app.post('/api/messages/new', function(req, res) {
+    let msg = req.body;
+
+    new User({ username: msg.username })
+      .fetch()
+      .then((found) => {
+        Messages.create({
+          text: msg.text,
+          user_id: found.id
+        });
+      })
+      .then((newMessage) => {
+        newMessage.username = msg.username;
+        io.emit('message', newMessage);
+        res.json(newMessage);
+      });
   });
 
   app.get('*', function(req, res) {
