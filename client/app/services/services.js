@@ -22,32 +22,31 @@ angular.module('socket-chat.services', [])
     connection.emit('logout', name);
   };
 
-  var sendMessage = function(msg) {
-    connection.emit('message', msg);
-  };
-
-  var active = function() {
-    connection.emit('active');
-  };
-
   return {
     on: on,
     login: login,
-    logout: logout,
-    active: active,
-    sendMessage: sendMessage
+    logout: logout
   };
 })
 .factory('Message', function($http) {
   var getRecent = function() {
-    return $http.get('/api/messages/recent')
+    return $http.get('/api/messages/')
       .then(function(res) {
-        return res.data;
+        return res.data.slice(0, 20);
       });
   };
 
+  var sendMessage = function(msg) {
+    return $http({
+      method: 'POST',
+      url: '/api/messages/new',
+      data: msg
+    });
+  };
+
   return {
-    getRecent: getRecent
+    getRecent: getRecent,
+    sendMessage: sendMessage
   };
 })
 .factory('Users', function($http) {

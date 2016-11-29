@@ -4,18 +4,9 @@ const Users = require('../collections/users');
 const Messages = require('../collections/messages');
 var jwt = require('jwt-simple');
 
-module.exports = function (app, express, activeUsers, guestList, messages) {
+module.exports = function (app, express, io, activeUsers) {
   app.get('/api/users/active', function(req, res) {
     res.json(activeUsers);
-  });
-
-  app.get('/api/users/guest', function(req, res) {
-    let num = 1;
-    while (guestList.indexOf(num) !== -1) {
-      num++;
-    }
-
-    res.json(num);
   });
 
   app.post('/api/users/signup', function(req, res) {
@@ -59,11 +50,32 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
     });
   });
 
-  app.get('/api/messages/recent', function(req, res) {
-    let tempMessages = messages.slice(-20);
-    tempMessages.reverse();
+  app.get('/api/messages/', function(req, res) {
+    Messages.orderBy('-created_at')
+      .fetch({withRelated: ['user']})
+      .then((rows) => {
+        res.json(rows);
+      });
+  });
 
-    res.json(tempMessages);
+  app.post('/api/messages/new', function(req, res) {
+    let msg = req.body;
+
+    new User({ username: msg.username })
+      .fetch()
+      .then((found) => {
+        Messages.create({
+          text: msg.text,
+          user_id: found.id
+        })
+        .then((newMessage) => {
+          newMessage.fetch({withRelated: ['user']})
+          .then((newMessageComplete) => {
+            io.emit('message', newMessageComplete);
+            res.json(newMessageComplete);
+          });
+        });
+      });
   });
 
   app.get('*', function(req, res) {

@@ -9,7 +9,6 @@ angular.module('socket-chat.chat', [
   $scope.messages = [];
   $scope.messageDisplayAmount = 20;
   $scope.isAuth = Auth.isAuth;
-  $scope.activeCount = 0;
 
   $scope.loadCurrent = function() {
     Users.getActiveUsers()
@@ -21,26 +20,22 @@ angular.module('socket-chat.chat', [
       .then(function(messages) {
         $scope.messages = messages;
       });
-
-    Socket.active();
   };
 
   $scope.sendMessage = function() {
     let message = {
-      user: Auth.user.username,
-      text: $scope.message,
-      createdAt: moment().format('YYYY-MM-DD H:mm:ss')
+      username: Auth.user.username,
+      text: $scope.message
     };
 
-    Socket.sendMessage(message);
-    $scope.addMessage(message);
+    Message.sendMessage(message);
     $scope.message = '';
   };
 
   $scope.addMessage = function(msg) {
     $scope.messages.unshift(msg);
 
-    if ($scope.messages.length > $scope.messageDisplayAmount) {
+    while ($scope.messages.length > $scope.messageDisplayAmount) {
       $scope.messages.pop();
     }
   };
@@ -62,9 +57,5 @@ angular.module('socket-chat.chat', [
 
   Socket.on('message', function(msg) {
     $scope.addMessage(msg);
-  });
-
-  Socket.on('count', function(count) {
-    $scope.activeCount = count;
   });
 });
