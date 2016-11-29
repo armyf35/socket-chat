@@ -67,12 +67,14 @@ module.exports = function (app, express, io, activeUsers) {
         Messages.create({
           text: msg.text,
           user_id: found.id
+        })
+        .then((newMessage) => {
+          newMessage.fetch({withRelated: ['user']})
+          .then((newMessageComplete) => {
+            io.emit('message', newMessageComplete);
+            res.json(newMessageComplete);
+          });
         });
-      })
-      .then((newMessage) => {
-        newMessage.username = msg.username;
-        io.emit('message', newMessage);
-        res.json(newMessage);
       });
   });
 
