@@ -1,4 +1,7 @@
-module.exports = function(io, activeUsers, guestList, messages) {
+const User = require('../models/user');
+const Messages = require('../collections/messages');
+
+module.exports = function(io, activeUsers) {
   var connectionCount = 0;
 
   io.on('connection', function(socket) {
@@ -27,7 +30,14 @@ module.exports = function(io, activeUsers, guestList, messages) {
 
     socket.on('message', function(msg) {
       socket.broadcast.emit('message', msg);
-      messages.push(msg);
+
+      new User({ username: msg.user }).fetch().then((found) => {
+        Messages.create({
+          text: msg.text,
+          user_id: found.id,
+          created_at: msg.created_at
+        });
+      });
     });
 
     socket.on('active', function() {
