@@ -58,6 +58,11 @@ angular.module('socket-chat.chat', [
     $scope.users.splice($scope.users.indexOf(name), 1);
   });
 
+  Socket.on('reconnect', function() {
+    $scope.loadCurrent(); 
+    Socket.login($scope.name);
+  });
+
   Socket.on('message', function(msg) {
     $scope.addMessage(msg);
   });
