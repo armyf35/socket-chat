@@ -58,7 +58,9 @@ angular.module('socket-chat.services', [])
   };
 })
 .factory('Auth', function($http, Socket) {
-  var signin = function (user) {
+  user = {};
+
+  var signin = function () {
     return $http({
       method: 'POST',
       url: '/api/users/signin',
@@ -69,7 +71,7 @@ angular.module('socket-chat.services', [])
     });
   };
 
-  var signup = function (user) {
+  var signup = function () {
     return $http({
       method: 'POST',
       url: '/api/users/signup',
@@ -94,6 +96,7 @@ angular.module('socket-chat.services', [])
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    user: user
   };
 });
