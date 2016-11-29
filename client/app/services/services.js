@@ -56,4 +56,44 @@ angular.module('socket-chat.services', [])
     getActiveUsers: getActiveUsers,
     getGuestNum: getGuestNum
   };
+})
+.factory('Auth', function($http, Socket) {
+  var signin = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/api/users/signin',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
+
+  var signup = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/api/users/signup',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
+
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.socket-chat');
+  };
+
+  var signout = function () {
+    $window.localStorage.removeItem('com.socket-chat');
+    $location.path('/chat');
+  };
+
+
+  return {
+    signin: signin,
+    signup: signup,
+    isAuth: isAuth,
+    signout: signout
+  };
 });
