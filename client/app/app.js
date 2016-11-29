@@ -17,6 +17,12 @@ angular.module('socket-chat', [
       templateUrl: 'app/auth/login.html',
       controller: 'AuthController'
     })
+    .when('/logout', {
+      controller: 'AuthController',
+      resolve: {
+        redirect: '/chat'
+      }
+    })
     .otherwise({
       redirectTo: '/chat'
     });
