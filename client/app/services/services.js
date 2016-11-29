@@ -22,9 +22,6 @@ angular.module('socket-chat.services', [])
     connection.emit('logout', name);
   };
 
-  var sendMessage = function(msg) {
-    connection.emit('message', msg);
-  };
 
   var active = function() {
     connection.emit('active');
@@ -33,8 +30,7 @@ angular.module('socket-chat.services', [])
   return {
     on: on,
     login: login,
-    logout: logout,
-    sendMessage: sendMessage
+    logout: logout
   };
 })
 .factory('Message', function($http) {
@@ -45,8 +41,17 @@ angular.module('socket-chat.services', [])
       });
   };
 
+  var sendMessage = function(msg) {
+    return $http({
+      method: 'POST',
+      url: '/api/messages/new',
+      data: msg
+    });
+  };
+
   return {
-    getRecent: getRecent
+    getRecent: getRecent,
+    sendMessage: sendMessage
   };
 })
 .factory('Users', function($http) {
