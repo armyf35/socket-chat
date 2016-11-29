@@ -15,13 +15,23 @@ angular.module('socket-chat.services', [])
     connection.emit('login', name);
   };
 
+  var logout = function(name) {
+    connection.emit('logout', name);
+  };
+
   var sendMessage = function(msg) {
     connection.emit('message', msg);
+  };
+
+  var active = function() {
+    connection.emit('active');
   };
 
   return {
     on: on,
     login: login,
+    logout: logout,
+    active: active,
     sendMessage: sendMessage
   };
 })
@@ -45,15 +55,50 @@ angular.module('socket-chat.services', [])
       });
   };
 
-  var getGuestNum = function() {
-    return $http.get('/api/users/guest')
-      .then(function(res) {
-        return res.data;
-      });
+  return {
+    getActiveUsers: getActiveUsers
+  };
+})
+.factory('Auth', function($http, $window, $location, Socket) {
+  user = {};
+
+  var signin = function () {
+    return $http({
+      method: 'POST',
+      url: '/api/users/signin',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
   };
 
+  var signup = function () {
+    return $http({
+      method: 'POST',
+      url: '/api/users/signup',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
+
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.socket-chat');
+  };
+
+  var signout = function () {
+    $window.localStorage.removeItem('com.socket-chat');
+    $location.path('/chat');
+  };
+
+
   return {
-    getActiveUsers: getActiveUsers,
-    getGuestNum: getGuestNum
+    signin: signin,
+    signup: signup,
+    isAuth: isAuth,
+    signout: signout,
+    user: user
   };
 });

@@ -3,12 +3,13 @@ angular.module('socket-chat.chat', [
   'angularMoment'
 ])
 
-.controller('ChatController', function ($scope, Socket, Message, Users, moment) {
+.controller('ChatController', function ($scope, Socket, Message, Users, Auth, moment) {
   $scope.users = [];
   $scope.message = '';
   $scope.messages = [];
   $scope.messageDisplayAmount = 20;
-  $scope.name = 'guest';
+  $scope.isAuth = Auth.isAuth;
+  $scope.activeCount = 0;
 
   $scope.loadCurrent = function() {
     Users.getActiveUsers()
@@ -20,19 +21,13 @@ angular.module('socket-chat.chat', [
       .then(function(messages) {
         $scope.messages = messages;
       });
-  };
 
-  $scope.guestName = function() {
-    Users.getGuestNum()
-      .then(function(num) {
-        $scope.name += num;
-        Socket.login($scope.name);
-      });
+    Socket.active();
   };
 
   $scope.sendMessage = function() {
     let message = {
-      user: $scope.name,
+      user: Auth.user.username,
       text: $scope.message,
       createdAt: moment().format('YYYY-MM-DD H:mm:ss')
     };
@@ -59,11 +54,17 @@ angular.module('socket-chat.chat', [
   });
 
   Socket.on('reconnect', function() {
-    $scope.loadCurrent(); 
-    Socket.login($scope.name);
+    $scope.loadCurrent();
+    if (Auth.isAuth()) {
+      Socket.login(Auth.user.username);
+    }
   });
 
   Socket.on('message', function(msg) {
     $scope.addMessage(msg);
+  });
+
+  Socket.on('count', function(count) {
+    $scope.activeCount = count;
   });
 });

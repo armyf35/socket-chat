@@ -1,7 +1,7 @@
-<div class="container-fluid" id='chat' ng-init="loadCurrent(); guestName()">
+<div class="container-fluid" ng-init="loadCurrent()">
   <div class="row">
     <div class="row col-md-8 col-md-offset-2">
-    <form class="form-group " name="sendmessage" ng-submit="sendMessage()" novalidate>
+    <form class="form-group " name="sendmessage" ng-submit="sendMessage()" ng-hide="!isAuth()" novalidate>
       <div class="input-group">
         <input
           type="text"
@@ -20,6 +20,9 @@
         </span>
       </div>
     </form>
+    <div class="alert alert-dismissible alert-danger" ng-hide="isAuth()">
+      You must be logged in to send messages.
+    </div>
       <div class="list-group">
         <a class="list-group-item" ng-repeat="message in messages track by $index">
           <h4 class="list-group-item-heading">{{ message.user }}<span class="pull-right" am-time-ago="message.createdAt | amParse:'YYYY-MM-DD H:mm:ss'"></span></h4>
@@ -30,10 +33,7 @@
     <div class="col-md-2">
       <div class="list-group">
         <a class="list-group-item active">
-          Username: <span class="pull-right">{{ name }}</span>
-        </a>
-        <a class="list-group-item">
-          Users logged in: <span class="badge">{{ users.length }}</span>
+          Users logged in: <span class="badge">{{ activeCount }}</span>
         </a>
         <a class="list-group-item" ng-repeat="user in users track by $index">
           {{ user }}
