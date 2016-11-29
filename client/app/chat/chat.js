@@ -9,7 +9,6 @@ angular.module('socket-chat.chat', [
   $scope.messages = [];
   $scope.messageDisplayAmount = 20;
   $scope.isAuth = Auth.isAuth;
-  $scope.activeCount = 0;
 
   $scope.loadCurrent = function() {
     Users.getActiveUsers()
@@ -21,8 +20,6 @@ angular.module('socket-chat.chat', [
       .then(function(messages) {
         $scope.messages = messages;
       });
-
-    Socket.active();
   };
 
   $scope.sendMessage = function() {
@@ -62,9 +59,5 @@ angular.module('socket-chat.chat', [
 
   Socket.on('message', function(msg) {
     $scope.addMessage(msg);
-  });
-
-  Socket.on('count', function(count) {
-    $scope.activeCount = count;
   });
 });

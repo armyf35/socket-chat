@@ -34,7 +34,6 @@ angular.module('socket-chat.services', [])
     on: on,
     login: login,
     logout: logout,
-    active: active,
     sendMessage: sendMessage
   };
 })
