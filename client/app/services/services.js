@@ -1,6 +1,9 @@
 angular.module('socket-chat.services', [])
 .factory('Socket', function($rootScope) {
-  var connection = io.connect();
+  if (!$rootScope.connection) {
+    $rootScope.connection = io.connect();
+  }
+  connection = $rootScope.connection;
 
   var on = function (eventName, callback) {
     connection.on(eventName, function () {
