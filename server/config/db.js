@@ -44,4 +44,17 @@ db.knex.schema.hasTable('channels').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('channels_users').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('channels_users', function (channelsUsers) {
+      channelsUsers.increments('id').primary();
+      channelsUsers.integer('channel_id');
+      channelsUsers.integer('user_id');
+      channelsUsers.timestamps(true, true);
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
 module.exports = db;
