@@ -27,6 +27,13 @@ angular.module('socket-chat', [
 
   $httpProvider.interceptors.push('AttachTokens');
 })
+.controller('NavbarController', function($scope, $location, Auth) {
+  $scope.isActive = function (viewLocation) {
+    return viewLocation === $location.path();
+  };
+  $scope.isAuth = Auth.isAuth;
+  $scope.user = Auth.user;
+})
 .factory('AttachTokens', function ($window) {
   var attach = {
     request: function (object) {
