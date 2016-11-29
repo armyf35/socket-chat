@@ -13,6 +13,7 @@
     "angular": "^1.5.9",
     "angular-moment": "^1.0.0",
     "angular-route": "^1.5.9",
+    "bcrypt-nodejs": "0.0.3",
     "bookshelf": "^0.10.2",
     "bootstrap": "^3.3.7",
     "dotenv": "^2.0.0",
