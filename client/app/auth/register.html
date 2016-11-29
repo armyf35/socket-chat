@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="col-md-offset-4 col-md-4">
-    <form ng-submit="register()">
+    <form ng-submit="signup()">
       <h2>Please register</h2>
       <input
         type="username"
@@ -8,13 +8,13 @@
         placeholder="Username"
         required
         autofocus
-        ng-model="username">
+        ng-model="user.username">
       <input
         type="password"
         class="form-control"
         placeholder="Password"
         required
-        ng-model="password">
+        ng-model="user.password">
       <br>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Signup!</button>
     </form>
