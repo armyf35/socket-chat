@@ -32,4 +32,16 @@ db.knex.schema.hasTable('messages').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('channels').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('channels', function (channels) {
+      channels.increments('id').primary();
+      channels.text('name');
+      channels.timestamps(true, true);
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
 module.exports = db;
