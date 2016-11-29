@@ -3,13 +3,6 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
     res.json(activeUsers);
   });
 
-  app.get('/api/messages/recent', function(req, res) {
-    let tempMessages = messages.slice(-20);
-    tempMessages.reverse();
-
-    res.json(tempMessages);
-  });
-
   app.get('/api/users/guest', function(req, res) {
     let num = 1;
     while (guestList.indexOf(num) !== -1) {
@@ -17,6 +10,13 @@ module.exports = function (app, express, activeUsers, guestList, messages) {
     }
 
     res.json(num);
+  });
+
+  app.get('/api/messages/recent', function(req, res) {
+    let tempMessages = messages.slice(-20);
+    tempMessages.reverse();
+
+    res.json(tempMessages);
   });
 
   app.get('*', function(req, res) {
