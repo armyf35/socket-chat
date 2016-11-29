@@ -4,7 +4,7 @@ const Users = require('../collections/users');
 const Messages = require('../collections/messages');
 var jwt = require('jwt-simple');
 
-module.exports = function (app, express, activeUsers) {
+module.exports = function (app, express, io, activeUsers) {
   app.get('/api/users/active', function(req, res) {
     res.json(activeUsers);
   });
