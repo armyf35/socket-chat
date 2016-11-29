@@ -7,9 +7,6 @@ var knex = require('knex')({
 var db = require('bookshelf')(knex);
 
 db.knex.schema.hasTable('users').then(function(exists) {
-  // if (exists) {
-  //   db.knex.schema.dropTable('users');
-  // }
   if (!exists) {
     db.knex.schema.createTable('users', function (user) {
       user.increments('id').primary();
@@ -23,15 +20,12 @@ db.knex.schema.hasTable('users').then(function(exists) {
 });
 
 db.knex.schema.hasTable('messages').then(function(exists) {
-  // if (exists) {
-  //   db.knex.schema.dropTable('messages');
-  // }
   if (!exists) {
     db.knex.schema.createTable('messages', function (messages) {
       messages.increments('id').primary();
       messages.text('text');
       messages.integer('user_id');
-      messages.text('created_at');
+      messages.timestamps(true, true);
     }).then(function (table) {
       console.log('Created Table', table);
     });
