@@ -39,9 +39,9 @@ angular.module('socket-chat.services', [])
 })
 .factory('Message', function($http) {
   var getRecent = function() {
-    return $http.get('/api/messages/recent')
+    return $http.get('/api/messages/')
       .then(function(res) {
-        return res.data;
+        return res.data.slice(0, 20);
       });
   };
 

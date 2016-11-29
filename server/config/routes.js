@@ -50,9 +50,9 @@ module.exports = function (app, express, io, activeUsers) {
     });
   });
 
-  app.get('/api/messages/recent', function(req, res) {
-    Messages.orderBy('created_at')
-      .fetch()
+  app.get('/api/messages/', function(req, res) {
+    Messages.orderBy('-created_at')
+      .fetch({withRelated: ['user']})
       .then((rows) => {
         res.json(rows);
       });
