@@ -29,10 +29,12 @@ io.on('connection', function(socket) {
   });
 
   socket.on('disconnect', function() {
-    socket.broadcast.emit('logout', socket.name);
-    activeUsers.splice(activeUsers.indexOf(socket.name), 1);
-    if (socket.name.substr(0, 5) === 'guest') {
-      guestList.splice(guestList.indexOf(parseInt(socket.name.substr(5))), 1);
+    if (socket.name) {
+      socket.broadcast.emit('logout', socket.name);
+      activeUsers.splice(activeUsers.indexOf(socket.name), 1);
+      if (socket.name.substr(0, 5) === 'guest') {
+        guestList.splice(guestList.indexOf(parseInt(socket.name.substr(5))), 1);
+      }
     }
   });
 
