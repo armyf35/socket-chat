@@ -4,6 +4,7 @@ const Messages = require('../collections/messages');
 module.exports = function(io, activeUsers) {
 
   io.on('connection', function(socket) {
+    socket.disconnect(0);
     socket.on('login', function(name) {
       socket.name = name;
       socket.broadcast.emit('login', name);
