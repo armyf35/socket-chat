@@ -25,7 +25,7 @@
     </div>
       <div class="list-group">
         <a class="list-group-item" ng-repeat="message in messages track by $index">
-          <h4 class="list-group-item-heading">{{ message.user }}<span class="pull-right" am-time-ago="message.createdAt | amParse:'YYYY-MM-DD H:mm:ss'"></span></h4>
+          <h4 class="list-group-item-heading">{{ message.user }}<span class="pull-right" am-time-ago="message.created_at | amParse:'YYYY-MM-DD H:mm:ss'"></span></h4>
           <p class="list-group-item-text">{{ message.text }}</p>
         </a>
       </div>

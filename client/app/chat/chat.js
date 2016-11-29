@@ -29,7 +29,7 @@ angular.module('socket-chat.chat', [
     let message = {
       user: Auth.user.username,
       text: $scope.message,
-      createdAt: moment().format('YYYY-MM-DD H:mm:ss')
+      created_at: moment().format('YYYY-MM-DD H:mm:ss')
     };
 
     Socket.sendMessage(message);
