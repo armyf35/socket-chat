@@ -15,6 +15,10 @@ angular.module('socket-chat.services', [])
     connection.emit('login', name);
   };
 
+  var logout = function(name) {
+    connection.emit('logout', name);
+  };
+
   var sendMessage = function(msg) {
     connection.emit('message', msg);
   };
@@ -22,6 +26,7 @@ angular.module('socket-chat.services', [])
   return {
     on: on,
     login: login,
+    logout: logout,
     sendMessage: sendMessage
   };
 })
