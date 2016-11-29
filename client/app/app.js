@@ -10,11 +10,11 @@ angular.module('socket-chat', [
       controller: 'ChatController'
     })
     .when('/register', {
-      templateUrl: 'app/auth/auth.html',
+      templateUrl: 'app/auth/register.html',
       controller: 'AuthController'
     })
     .when('/login', {
-      templateUrl: 'app/auth/auth.html',
+      templateUrl: 'app/auth/login.html',
       controller: 'AuthController'
     })
     .otherwise({
