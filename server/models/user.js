@@ -1,7 +1,6 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt-nodejs');
 const Promise = require('bluebird');
-const Message = require('./message');
 
 var User = db.Model.extend({
   tableName: 'users',
@@ -28,7 +27,7 @@ var User = db.Model.extend({
       });
   },
   messages: function() {
-    return this.hasMany(Message);
+    return this.hasMany(require('./message'));
   }
 });
 
