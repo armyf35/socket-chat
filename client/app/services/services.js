@@ -23,10 +23,15 @@ angular.module('socket-chat.services', [])
     connection.emit('message', msg);
   };
 
+  var active = function() {
+    connection.emit('active');
+  };
+
   return {
     on: on,
     login: login,
     logout: logout,
+    active: active,
     sendMessage: sendMessage
   };
 })
@@ -50,16 +55,8 @@ angular.module('socket-chat.services', [])
       });
   };
 
-  var getGuestNum = function() {
-    return $http.get('/api/users/guest')
-      .then(function(res) {
-        return res.data;
-      });
-  };
-
   return {
-    getActiveUsers: getActiveUsers,
-    getGuestNum: getGuestNum
+    getActiveUsers: getActiveUsers
   };
 })
 .factory('Auth', function($http, $window, $location, Socket) {
