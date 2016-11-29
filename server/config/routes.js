@@ -1,3 +1,8 @@
+const User = require('../models/user');
+const Message = require('../models/message');
+const Users = require('../models/user');
+const Messages = require('../models/message');
+
 module.exports = function (app, express, activeUsers, guestList, messages) {
   app.get('/api/users/active', function(req, res) {
     res.json(activeUsers);
