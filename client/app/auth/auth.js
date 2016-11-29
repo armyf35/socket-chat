@@ -1,10 +1,10 @@
 angular.module('socket-chat.auth', [])
 .controller('AuthController', function($scope, $window, $location, Auth, Socket) {
   $scope.user = Auth.user;
-  
+  for (var prop in $scope.user) { if ($scope.user.hasOwnProperty(prop)) { delete $scope.user[prop]; } }
+
   if ($location.$$path === '/logout') {
     Auth.signout();
-    $scope.user = {};
   }
 
   $scope.signin = function () {
