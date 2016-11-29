@@ -57,7 +57,7 @@ angular.module('socket-chat.services', [])
     getGuestNum: getGuestNum
   };
 })
-.factory('Auth', function($http, Socket) {
+.factory('Auth', function($http, $window, $location, Socket) {
   user = {};
 
   var signin = function () {
