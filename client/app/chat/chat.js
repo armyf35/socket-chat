@@ -59,7 +59,7 @@ angular.module('socket-chat.chat', [
   });
 
   Socket.on('reconnect', function() {
-    $scope.loadCurrent(); 
+    $scope.loadCurrent();
     Socket.login($scope.name);
   });
 
