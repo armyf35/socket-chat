@@ -1,9 +1,11 @@
 angular.module('socket-chat.auth', [])
 .controller('AuthController', function($scope, $window, $location, Auth, Socket) {
+  $scope.user = Auth.user;
+  
   if ($location.$$path === '/logout') {
     Auth.signout();
+    $scope.user = {};
   }
-  $scope.user = Auth.user;
 
   $scope.signin = function () {
     Auth.signin($scope.user)
