@@ -23,11 +23,17 @@ io.on('connection', function(socket) {
   socket.on('logout', function(name) {
     socket.broadcast.emit('logout', name);
     activeUsers.splice(activeUsers.indexOf(name), 1);
+    if (name.substr(0, 5) === 'guest') {
+      guestList.splice(guestList.indexOf(parseInt(name.substr(5))), 1);
+    }
   });
 
   socket.on('disconnect', function() {
     socket.broadcast.emit('logout', socket.name);
     activeUsers.splice(activeUsers.indexOf(socket.name), 1);
+    if (socket.name.substr(0, 5) === 'guest') {
+      guestList.splice(guestList.indexOf(parseInt(socket.name.substr(5))), 1);
+    }
   });
 
   socket.on('message', function(msg) {
