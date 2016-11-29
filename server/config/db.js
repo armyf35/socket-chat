@@ -29,7 +29,7 @@ db.knex.schema.hasTable('messages').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('messages', function (user) {
       user.increments('id').primary();
-      user.text('test');
+      user.text('text');
       user.integer('user_id');
       user.timestamps(true, true);
     }).then(function (table) {
