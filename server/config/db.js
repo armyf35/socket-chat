@@ -27,11 +27,11 @@ db.knex.schema.hasTable('messages').then(function(exists) {
   //   db.knex.schema.dropTable('messages');
   // }
   if (!exists) {
-    db.knex.schema.createTable('messages', function (user) {
-      user.increments('id').primary();
-      user.text('text');
-      user.integer('user_id');
-      user.timestamps(true, true);
+    db.knex.schema.createTable('messages', function (messages) {
+      messages.increments('id').primary();
+      messages.text('text');
+      messages.integer('user_id');
+      messages.text('created_at');
     }).then(function (table) {
       console.log('Created Table', table);
     });
