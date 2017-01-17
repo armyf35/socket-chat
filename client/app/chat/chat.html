@@ -1,0 +1,51 @@
+<div class="container-fluid" ng-init="loadCurrent()">
+  <div class="row">
+    <div class="row col-md-8 col-md-offset-2">
+    <form
+      class="form-group"
+      name="sendmessage"
+      ng-submit="sendMessage()"
+      ng-hide="!isAuth()"
+      novalidate>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="message"
+          required
+          ng-model="message">
+        <span class="input-group-btn">
+          <button
+            class="btn btn-default"
+            type="submit"
+            name="button"
+            ng-disabled="sendmessage.$invalid">
+            Send
+          </button>
+        </span>
+      </div>
+    </form>
+    <div class="alert alert-dismissible alert-danger" ng-hide="isAuth()">
+      You must be logged in to send messages.
+    </div>
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="message in messages track by $index">
+          <h4 class="list-group-item-heading">{{ message.user.username }}
+            <span class="pull-right" am-time-ago="message.created_at"></span>
+          </h4>
+          <p class="list-group-item-text">{{ message.text }}</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="list-group">
+        <a class="list-group-item active">
+          Users logged in: <span class="badge">{{ users.length }}</span>
+        </a>
+        <a class="list-group-item" ng-repeat="user in users track by $index">
+          {{ user }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
