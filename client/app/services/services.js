@@ -1,5 +1,5 @@
 angular.module('socket-chat.services', [])
-.factory('Socket', function($rootScope) {
+.factory('Socket', ['$rootScope', function($rootScope) {
   if (!$rootScope.connection) {
     $rootScope.connection = io.connect();
   }
@@ -27,8 +27,8 @@ angular.module('socket-chat.services', [])
     login: login,
     logout: logout
   };
-})
-.factory('Message', function($http) {
+}])
+.factory('Message', ['$http', function($http) {
   var getRecent = function() {
     return $http.get('/api/messages/')
       .then(function(res) {
@@ -48,8 +48,8 @@ angular.module('socket-chat.services', [])
     getRecent: getRecent,
     sendMessage: sendMessage
   };
-})
-.factory('Users', function($http) {
+}])
+.factory('Users', ['$http', function($http) {
   var getActiveUsers = function() {
     return $http.get('/api/users/active')
       .then(function(res) {
@@ -60,8 +60,8 @@ angular.module('socket-chat.services', [])
   return {
     getActiveUsers: getActiveUsers
   };
-})
-.factory('Auth', function($http, $window, $location, Socket) {
+}])
+.factory('Auth', ['$http', '$window', '$location', 'Socket', function($http, $window, $location, Socket) {
   user = {};
 
   var signin = function () {
@@ -103,4 +103,4 @@ angular.module('socket-chat.services', [])
     signout: signout,
     user: user
   };
-});
+}]);
