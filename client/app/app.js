@@ -3,7 +3,7 @@ angular.module('socket-chat', [
   'socket-chat.auth',
   'ngRoute'
 ])
-.config(function ($routeProvider, $httpProvider) {
+.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
   $routeProvider
     .when('/chat', {
       templateUrl: 'app/chat/chat.html',
@@ -26,15 +26,15 @@ angular.module('socket-chat', [
     });
 
   $httpProvider.interceptors.push('AttachTokens');
-})
-.controller('NavbarController', function($scope, $location, Auth) {
+}])
+.controller('NavbarController', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
   $scope.isAuth = Auth.isAuth;
   $scope.user = Auth.user;
-})
-.factory('AttachTokens', function ($window) {
+}])
+.factory('AttachTokens', ['$window', function ($window) {
   var attach = {
     request: function (object) {
       var jwt = $window.localStorage.getItem('com.socket-chat');
@@ -46,4 +46,4 @@ angular.module('socket-chat', [
     }
   };
   return attach;
-});
+}]);

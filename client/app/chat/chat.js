@@ -3,7 +3,7 @@ angular.module('socket-chat.chat', [
   'angularMoment'
 ])
 
-.controller('ChatController', function ($scope, Socket, Message, Users, Auth, moment) {
+.controller('ChatController', ['$scope', 'Socket', 'Message', 'Users', 'Auth', 'moment', function ($scope, Socket, Message, Users, Auth, moment) {
   $scope.users = [];
   $scope.message = '';
   $scope.messages = [];
@@ -58,4 +58,4 @@ angular.module('socket-chat.chat', [
   Socket.on('message', function(msg) {
     $scope.addMessage(msg);
   });
-});
+}]);
